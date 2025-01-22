@@ -1,0 +1,28 @@
+<button class="back" routerLink="/auth">
+    <mat-icon class="arrow">keyboard_backspace</mat-icon>
+</button>
+
+<nav class="header">
+    <div class="logo_div">
+        <img class="logo" src="assets/icon.svg" alt = "App logo">
+    </div>
+</nav>
+
+<div class="login_page">
+    
+    <h2 class="title">Se connecter</h2>
+     
+    <form [formGroup]="loginForm">
+        <div class="form_input">
+            <label for="usernameOrEmail">Email ou nom d'utilisateur</label>
+            <input type="text" id="usernameOrEmail" formControlName="usernameOrEmail">
+        </div>
+        <div class="form_input">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" formControlName="password">
+        </div>
+        <button class="submit" type="submit" (click)="onSubmit()">Se connecter</button>
+    </form>
+    <span *ngIf="onError" class="error">An error occurred</span>
+
+</div>

@@ -24,6 +24,11 @@ public class UserService {
         List<User> users = repository.findByEmail(email); //emails are unique
         return users.size()>0;
     }
+    public User findByUsernameOrEmail(String usernameOrEmail){
+        List<User> user = repository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
+        return user.get(0);
+    }
+
 
     public User findByEmail(String email){
         return repository.findByEmail(email).get(0); //emails are unique

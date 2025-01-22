@@ -1,0 +1,36 @@
+
+section{
+    text-align: center;
+}
+
+.logo{
+    padding-top: 7%;
+    width: 30%;
+}
+
+.link_button{
+    display: inline;
+}
+
+.button{
+    border-radius: 0.7em;
+    font-size: 1.3em;
+    color: black; //why not working 
+    
+    margin: 5em;
+    padding: 1.3em 2em 1.3em 2em;
+}
+
+@media (max-width: 800px) {
+    .link_button{
+        display: block;
+    }
+    .logo{
+        padding-top: 10%;
+        width: 80%;
+    }
+    .button{
+        margin-top: 2em;
+        margin-bottom: 0;
+    }
+}
