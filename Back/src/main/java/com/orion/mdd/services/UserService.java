@@ -2,6 +2,7 @@ package com.orion.mdd.services;
 
 import com.orion.mdd.model.User;
 import com.orion.mdd.model.dto.RegisterRequest;
+import com.orion.mdd.model.dto.UserInformationDTO;
 import com.orion.mdd.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,14 @@ public class UserService {
         user.setPassword(encoder.encode(registerRequest.password()));
         repository.save(user);
     }
+    public void putUser(UserInformationDTO request){
+        User user = repository.findById(request.getId()).get(); // ID in DB, because sent from front, that get it from Backend's DB
+        user.setEmail(request.getEmail());
+        user.setUsername(request.getUsername());
+        repository.save(user);
+    }
+
+
+
 
 }

@@ -1,15 +1,26 @@
 package com.orion.mdd.model.dto;
 
-public class LoginResponse{
+import com.orion.mdd.config.UsernameValidation;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public class UserInformationDTO{
+    @NotNull
     private Integer id;
+    @NotBlank(message = "Username may not be null")
+    @UsernameValidation
     private String username;
+    @Email(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$",
+            message = "Invalid email")
     private String email;
 
-    public LoginResponse( Integer id, String username, String email) {
+    public UserInformationDTO(Integer id, String username, String email) {
         this.id = id;
         this.username = username;
         this.email = email;
     }
+
     public Integer getId() {
         return id;
     }
@@ -34,5 +45,3 @@ public class LoginResponse{
         this.email = email;
     }
 }
-
-

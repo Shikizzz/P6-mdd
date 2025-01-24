@@ -61,6 +61,7 @@ input{
     padding: 0.5em 1.3em;
     border-radius: 0.5em;
     font-weight: 500;
+    cursor: pointer;
 }
 
 .error{
@@ -93,7 +94,7 @@ input{
     }
 
     .title{
-    margin-bottom: 1em;
-    padding-top: 0em;
+        margin-bottom: 1em;
+        padding-top: 0em;
     }
 }

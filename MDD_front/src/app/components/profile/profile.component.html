@@ -1,0 +1,18 @@
+<app-header></app-header>
+
+<div class = "profile_page">
+    <h2 class="title">Profil utilisateur</h2>
+
+    <form [formGroup]="form">
+        <div class="form_input">
+            <input type="text" id="username" formControlName="username">
+        </div>
+        <div class="form_input">
+            <input type="email" id="email" formControlName="email">
+        </div>
+        <button class="submit" type="submit" (click)="onSubmit()">Sauvegarder</button>
+    </form>
+    <button class="disconnect" (click)="onDisconnect()">Se déconnecter</button>
+</div>
+
+<div class="separator"></div>

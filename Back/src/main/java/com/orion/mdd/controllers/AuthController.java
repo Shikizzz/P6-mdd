@@ -4,17 +4,18 @@ import com.orion.mdd.model.User;
 import com.orion.mdd.model.dto.LoginRequest;
 import com.orion.mdd.model.dto.LoginResponse;
 import com.orion.mdd.model.dto.RegisterRequest;
+import com.orion.mdd.model.dto.TokenResponse;
 import com.orion.mdd.security.JWTService;
 import com.orion.mdd.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @CrossOrigin("http://localhost:4200")
 public class AuthController {
     private JWTService jwtService;
@@ -23,20 +24,28 @@ public class AuthController {
         this.jwtService = jwtService;
         this.userService = userService;
     }
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
 
         String token = jwtService.authenticate(loginRequest.usernameOrEmail(), loginRequest.password());
         if (token.length()>0){
-            User user = userService.findByUsernameOrEmail(loginRequest.usernameOrEmail());
-            return ResponseEntity.ok(new LoginResponse(token,
-                    user.getId(),
-                    user.getUsername(),
-                    user.getEmail()));
+            return ResponseEntity.ok(new TokenResponse(token));
         }
         else return new ResponseEntity<String>("error", HttpStatus.OK);
     }
-    @PostMapping("/auth/register")
+
+    @GetMapping("/me")
+    public ResponseEntity<?> token(Authentication authentication) {
+        User user = userService.findByEmail(authentication.getName());
+        return ResponseEntity.ok(new LoginResponse(
+                user.getUserId(),
+                user.getUsername(),
+                user.getEmail()
+                ));
+    }
+
+
+    @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest){
         if(userService.usernameExistsInDB(registerRequest.username())){
             return new ResponseEntity<String>("Username already taken", HttpStatus.BAD_REQUEST);

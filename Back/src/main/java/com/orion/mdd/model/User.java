@@ -11,31 +11,32 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(unique=true, name="username")
+    @Column(name = "user_id")
+    private Integer userId;
+    @Column(unique = true, name = "username")
     @NotNull
     private String username;
-    @Column(unique=true, name="email")
+    @Column(unique = true, name = "email")
     @NotNull
     private String email;
-    @Column(name="password")
+    @Column(name = "password")
     @NotNull
     private String password;
-    @OneToMany(
-            cascade = CascadeType.ALL,
+    @OneToMany(                             //Unidirectional
+            cascade = CascadeType.DETACH,
             fetch = FetchType.EAGER)
-    @JoinColumn(name ="topic_id")
+    @JoinColumn(name = "user_id")
     private List<Topic> topics = new ArrayList<>();
 
     public User() {
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

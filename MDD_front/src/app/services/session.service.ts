@@ -1,11 +1,16 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { SessionInformation } from "../interfaces/sessionInformation.interface";
+import { SessionInformation } from "../interfaces/sessionInformation.class";
+import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SessionService {
+
+    constructor(
+        private router: Router) {
+    }
 
     public isLogged = false;
     public sessionInformation: SessionInformation | undefined;
@@ -23,9 +28,11 @@ export class SessionService {
     }
 
     public logOut(): void {
+        localStorage.removeItem('jwtToken');
         this.sessionInformation = undefined;
         this.isLogged = false;
         this.next();
+        this.router.navigate(['/auth/login'])
     }
 
     private next(): void {

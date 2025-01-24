@@ -6,8 +6,10 @@ import { SessionService } from '../../../services/session.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginRequest } from '../../../interfaces/loginRequest.interface';
-import { SessionInformation } from '../../../interfaces/sessionInformation.interface';
+import { SessionInformation } from '../../../interfaces/sessionInformation.class';
 import { NgIf } from '@angular/common';
+import { UserInformationDTO } from '../../../interfaces/userInformationDTO';
+import { AuthSuccess } from '../interfaces/authSuccess.interface';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +37,11 @@ export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
 
   ngOnInit(): void {
+
+    let token: string | null = localStorage.getItem("jwtToken");
+
+    if (token !== null) { this.authenticateUser(token) }
+
     this.loginForm = this.fb.group({
       usernameOrEmail: [
         '',
@@ -57,9 +64,25 @@ export class LoginComponent implements OnInit {
   public onSubmit(): void {
     const loginRequest = this.loginForm.value as LoginRequest;
     this.authService.login(loginRequest).subscribe({
-      next: (response: SessionInformation) => {
-        this.sessionService.logIn(response);
-        this.router.navigate(['/articles'])
+      next: (tokenObject: AuthSuccess) => {
+        localStorage.setItem('jwtToken', tokenObject.token); //for future connections
+        this.authenticateUser(tokenObject.token);
+      },
+      error: _ => {
+        this.onError = true
+      },
+    }
+    );
+  }
+
+  public authenticateUser(token: string): void {
+    this.authService.authenticate(token).subscribe({
+      next: (user: UserInformationDTO) => {
+        let sessionInformation: SessionInformation = new SessionInformation(
+          token, user.id, user.username, user.email
+        )
+        this.sessionService.logIn(sessionInformation);
+        this.router.navigate(['/articles']);
       },
       error: _ => {
         this.onError = true
