@@ -10,8 +10,6 @@ export function jwtInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): 
         return next(req)
     }
 
-    console.log(sessionService.isLogged)
-
     const headers = new HttpHeaders({
         Authorization: `Bearer ${sessionService.sessionInformation!.token}`
     });
@@ -19,8 +17,6 @@ export function jwtInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): 
     const newReq = req.clone({
         headers
     })
-    console.log("headers " + headers)
-    console.log("body " + newReq.body)
     return next(newReq)
 
 }

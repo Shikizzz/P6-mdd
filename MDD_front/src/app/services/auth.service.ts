@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { RegisterRequest } from "../interfaces/registerRequest.interface";
-import { LoginRequest } from "../interfaces/loginRequest.interface";
-import { UserInformationDTO } from "../interfaces/userInformationDTO";
+import { RegisterRequest } from "../components/auth/interfaces/registerRequest.interface";
+import { LoginRequest } from "../components/auth/interfaces/loginRequest.interface";
+import { UserInformationDTO } from "../components/auth/interfaces/userInformationDTO";
 import { AuthSuccess } from "../components/auth/interfaces/authSuccess.interface";
 
 @Injectable({

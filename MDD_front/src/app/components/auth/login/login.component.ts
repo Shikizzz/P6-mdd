@@ -5,10 +5,10 @@ import { Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../services/session.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { LoginRequest } from '../../../interfaces/loginRequest.interface';
-import { SessionInformation } from '../../../interfaces/sessionInformation.class';
+import { LoginRequest } from '../interfaces/loginRequest.interface';
+import { SessionInformation } from '../interfaces/sessionInformation.class';
 import { NgIf } from '@angular/common';
-import { UserInformationDTO } from '../../../interfaces/userInformationDTO';
+import { UserInformationDTO } from '../interfaces/userInformationDTO';
 import { AuthSuccess } from '../interfaces/authSuccess.interface';
 
 @Component({
@@ -79,12 +79,13 @@ export class LoginComponent implements OnInit {
     this.authService.authenticate(token).subscribe({
       next: (user: UserInformationDTO) => {
         let sessionInformation: SessionInformation = new SessionInformation(
-          token, user.id, user.username, user.email
+          token, user.id, user.username, user.email, user.themes
         )
         this.sessionService.logIn(sessionInformation);
         this.router.navigate(['/articles']);
       },
       error: _ => {
+        localStorage.removeItem('jwtToken');
         this.onError = true
       },
     }

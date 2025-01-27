@@ -1,15 +1,19 @@
 package com.orion.mdd.model.dto;
 
+
 public class LoginResponse{
     private Integer id;
     private String username;
     private String email;
+    private ThemeDTO[] themes;
 
-    public LoginResponse( Integer id, String username, String email) {
+    public LoginResponse(Integer id, String username, String email, ThemeDTO[] themes) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.themes = themes;
     }
+
     public Integer getId() {
         return id;
     }
@@ -32,6 +36,14 @@ public class LoginResponse{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ThemeDTO[] getThemes() {
+        return themes;
+    }
+
+    public void setThemes(ThemeDTO[] themes) {
+        this.themes = themes;
     }
 }
 

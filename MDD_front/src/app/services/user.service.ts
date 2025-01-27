@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { UserInformationDTO } from "../interfaces/userInformationDTO";
+import { UserInformationDTO } from "../components/auth/interfaces/userInformationDTO";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -12,7 +12,15 @@ export class UserService {
 
     constructor(private httpClient: HttpClient) { }
 
-    public modifyProfile(putRequest: UserInformationDTO, token: string): Observable<void> {
+    public modifyProfile(putRequest: UserInformationDTO): Observable<void> {
         return this.httpClient.put<void>(`${this.pathService}`, putRequest);
+    }
+
+    public themeSubscribe(themeId: number): Observable<void> {
+        return this.httpClient.put<void>(`${this.pathService}/subscribe/${themeId}`, null);
+    }
+
+    public themeUnsubscribe(themeId: number): Observable<void> {
+        return this.httpClient.put<void>(`${this.pathService}/unSubscribe/${themeId}`, null);
     }
 }

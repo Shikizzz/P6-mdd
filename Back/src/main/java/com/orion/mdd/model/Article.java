@@ -17,8 +17,8 @@ public class Article {
     @ManyToOne(                              //Bidirectional
             cascade = CascadeType.ALL
     )
-    @JoinColumn(name="topic_id")
-    private Topic topic;
+    @JoinColumn(name="theme_id")
+    private Theme theme;
     @ManyToOne(                              //Unidirectional
             cascade = CascadeType.ALL
     )
@@ -33,5 +33,61 @@ public class Article {
     )
     @JoinColumn(name = "product_id")
     private List<Comment> comments = new ArrayList<>();
+    public Article() {
+    }
+    public Integer getArticleId() {
+        return articleId;
+    }
 
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

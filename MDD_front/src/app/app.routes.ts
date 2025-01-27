@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { UnauthGuard } from './guards/unauth.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { ArticlesComponent } from './components/articles/articles.component';
-import { ThemesComponent } from './themes/themes.component';
+import { ThemesComponent } from './components/themes/themes.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [

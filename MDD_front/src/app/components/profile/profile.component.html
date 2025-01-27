@@ -16,3 +16,11 @@
 </div>
 
 <div class="separator"></div>
+
+<div class="subscribes">
+    <h2 class="title">Abonnements</h2>
+
+    @for (themeElement of themesProps; track themeElement.theme.themeId) {
+        <app-theme class="theme" [themeProps]="themeElement"></app-theme>
+    }
+</div>

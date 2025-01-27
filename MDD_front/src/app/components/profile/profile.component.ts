@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SessionService } from '../../services/session.service';
-import { SessionInformation } from '../../interfaces/sessionInformation.class';
-import { Router } from '@angular/router';
-import { UserInformationDTO } from '../../interfaces/userInformationDTO';
+import { SessionInformation } from '../auth/interfaces/sessionInformation.class';
+import { UserInformationDTO } from '../auth/interfaces/userInformationDTO';
 import { UserService } from '../../services/user.service';
+import { Theme } from '../themes/interfaces/theme.class';
+import { ThemeComponent } from '../themes/theme/theme.component';
+import { ThemeProps } from '../themes/interfaces/themeProps.class';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
     HeaderComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ThemeComponent
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
@@ -22,16 +25,18 @@ export class ProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private sessionService: SessionService,
-    private userService: UserService,
-    private router: Router) {
-  }
+    private userService: UserService,) { }
+
   public onError = false;
 
   public sessionInformation!: SessionInformation;
   public form!: FormGroup;
 
+  public themesProps!: ThemeProps[];
+
   ngOnInit(): void {
     this.sessionInformation = this.sessionService.sessionInformation!;
+    this.themesProps = this.themesToThemesProps(this.sessionInformation.themes);
 
     this.form = this.fb.group({
       username: [
@@ -54,7 +59,7 @@ export class ProfileComponent implements OnInit {
   public onSubmit(): void {
     const request = this.form.value as UserInformationDTO;
     request.id = this.sessionInformation.id;
-    this.userService.modifyProfile(request, this.sessionInformation.token).subscribe({
+    this.userService.modifyProfile(request).subscribe({
       next: (_: any) => {
         this.sessionInformation.email = request.email;
         this.sessionInformation.username = request.username;
@@ -69,4 +74,12 @@ export class ProfileComponent implements OnInit {
   public onDisconnect(): void {
     this.sessionService.logOut();
   }
+
+  private themesToThemesProps(themes: Theme[]): ThemeProps[] {
+    let themesProps: ThemeProps[] = themes.map(theme => {
+      return new ThemeProps(theme, true)
+    })
+    return themesProps;
+  }
+
 }

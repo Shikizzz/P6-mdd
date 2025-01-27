@@ -8,7 +8,7 @@
     align-self: center;
     font-size: 2.5em;
     font-weight: 500;
-    margin: 1.2em auto;
+    margin: 1em auto;
 }
 
 .form_input{
@@ -17,7 +17,7 @@
     margin: auto;
     font-size: 1.6em;
     font-weight: 400;
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
 }
 input{
     padding-left: 0.3em;
@@ -59,6 +59,17 @@ input{
     border: 1px solid;
 }
 
+.subscribes{
+    width: 95%;
+    margin: auto;
+    margin-top: 2em;
+}
+
+.theme{
+    display: inline-block;
+    width: 50%;
+}
+
 @media (max-width: 1200px) {
     .form_input{
         width: 50%;
@@ -75,5 +86,9 @@ input{
         width: 80%;
         margin-bottom: 1.5em;
     }
+
+    .theme{
+        width: 100%;
+    } 
    
 }

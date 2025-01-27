@@ -1,0 +1,18 @@
+.page_container{
+    width: 95%;
+    margin: auto;
+    margin-top: 2em;
+}
+
+.theme{
+    display: inline-block;
+    width: 50%;
+}
+
+
+@media (max-width: 800px) {
+    .theme{
+    width: 100%
+    }
+}
+   

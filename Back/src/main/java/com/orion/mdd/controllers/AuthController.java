@@ -1,10 +1,7 @@
 package com.orion.mdd.controllers;
 
 import com.orion.mdd.model.User;
-import com.orion.mdd.model.dto.LoginRequest;
-import com.orion.mdd.model.dto.LoginResponse;
-import com.orion.mdd.model.dto.RegisterRequest;
-import com.orion.mdd.model.dto.TokenResponse;
+import com.orion.mdd.model.dto.*;
 import com.orion.mdd.security.JWTService;
 import com.orion.mdd.services.UserService;
 import jakarta.validation.Valid;
@@ -36,12 +33,8 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<?> token(Authentication authentication) {
-        User user = userService.findByEmail(authentication.getName());
-        return ResponseEntity.ok(new LoginResponse(
-                user.getUserId(),
-                user.getUsername(),
-                user.getEmail()
-                ));
+        LoginResponse response = userService.findByEmailAndReturnsDTO(authentication.getName());
+        return ResponseEntity.ok(response);
     }
 
 

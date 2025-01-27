@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { SessionInformation } from "../interfaces/sessionInformation.class";
+import { SessionInformation } from "../components/auth/interfaces/sessionInformation.class";
 import { Router } from "@angular/router";
+import { Theme } from "../components/themes/interfaces/theme.class";
 
 @Injectable({
     providedIn: 'root'
@@ -37,5 +38,14 @@ export class SessionService {
 
     private next(): void {
         this.isLoggedSubject.next(this.isLogged);
+    }
+
+    public addTheme(theme: Theme): void {
+        this.sessionInformation?.themes.push(theme);
+    }
+
+    public removeTheme(theme: Theme): void {
+        const index = this.sessionInformation?.themes.indexOf(theme); //is defined because else, this function won't be called
+        this.sessionInformation?.themes.splice(index!, 1);
     }
 }

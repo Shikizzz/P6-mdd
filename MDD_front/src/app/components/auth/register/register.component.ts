@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RegisterRequest } from '../../../interfaces/registerRequest.interface';
+import { RegisterRequest } from '../interfaces/registerRequest.interface';
 
 @Component({
   selector: 'app-register',

@@ -26,7 +26,7 @@ public class User {
             cascade = CascadeType.DETACH,
             fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private List<Topic> topics = new ArrayList<>();
+    private List<Theme> themes = new ArrayList<>();
 
     public User() {
     }
@@ -63,11 +63,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Topic> getTopics() {
-        return topics;
+    public List<Theme> getThemes() {
+        return themes;
     }
 
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
+    public void setThemes(List<Theme> themes) {
+        this.themes = themes;
     }
 }
