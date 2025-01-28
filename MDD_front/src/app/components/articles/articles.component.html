@@ -1,3 +1,13 @@
 <app-header></app-header>
 
-<p>articles works!</p>
+
+<div class="buttons_container">
+    <button class="addArticle" (click)="onAddArticle()">Créer un article</button>
+</div>
+
+
+<div class="articles_container">
+    @for (articleElement of articles; track articleElement.articleId) {
+        <app-article-preview class="article" [article]="articleElement" (click)="onClick(articleElement.articleId)"></app-article-preview>
+    }
+</div>

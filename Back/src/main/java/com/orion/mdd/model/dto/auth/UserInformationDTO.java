@@ -1,4 +1,4 @@
-package com.orion.mdd.model.dto;
+package com.orion.mdd.model.dto.auth;
 
 import com.orion.mdd.config.UsernameValidation;
 import jakarta.validation.constraints.Email;

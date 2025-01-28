@@ -1,6 +1,7 @@
 package com.orion.mdd.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Article {
     @JoinColumn(name = "user_id")
     private User user;
     private LocalDate date;
+    @Size(max = 1000)
     private String content;
     @OneToMany(                             //Unidirectional
             cascade = CascadeType.ALL,

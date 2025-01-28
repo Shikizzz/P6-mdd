@@ -1,7 +1,9 @@
 package com.orion.mdd.controllers;
 
-import com.orion.mdd.model.User;
-import com.orion.mdd.model.dto.*;
+import com.orion.mdd.model.dto.auth.LoginRequest;
+import com.orion.mdd.model.dto.auth.LoginResponse;
+import com.orion.mdd.model.dto.auth.RegisterRequest;
+import com.orion.mdd.model.dto.auth.TokenResponse;
 import com.orion.mdd.security.JWTService;
 import com.orion.mdd.services.UserService;
 import jakarta.validation.Valid;

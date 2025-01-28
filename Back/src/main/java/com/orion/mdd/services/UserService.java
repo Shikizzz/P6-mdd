@@ -2,10 +2,10 @@ package com.orion.mdd.services;
 
 import com.orion.mdd.model.Theme;
 import com.orion.mdd.model.User;
-import com.orion.mdd.model.dto.LoginResponse;
-import com.orion.mdd.model.dto.RegisterRequest;
+import com.orion.mdd.model.dto.auth.LoginResponse;
+import com.orion.mdd.model.dto.auth.RegisterRequest;
 import com.orion.mdd.model.dto.ThemeDTO;
-import com.orion.mdd.model.dto.UserInformationDTO;
+import com.orion.mdd.model.dto.auth.UserInformationDTO;
 import com.orion.mdd.repositories.ThemeRepository;
 import com.orion.mdd.repositories.UserRepository;
 import org.modelmapper.ModelMapper;

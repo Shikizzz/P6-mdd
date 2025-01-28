@@ -4,6 +4,9 @@ import { AuthGuard } from './guards/auth.guard';
 import { ArticlesComponent } from './components/articles/articles.component';
 import { ThemesComponent } from './components/themes/themes.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AddArticleComponent } from './components/articles/add-article/add-article.component';
+import { ArticlePreviewComponent } from './components/articles/article-preview/article-preview.component';
+import { ArticleComponent } from './components/articles/article/article.component';
 
 export const routes: Routes = [
 
@@ -20,6 +23,16 @@ export const routes: Routes = [
         component: ArticlesComponent
     },
     {
+        path: 'articles/add',
+        canActivate: [AuthGuard],
+        component: AddArticleComponent
+    },
+    {
+        path: 'articles/:id',
+        canActivate: [AuthGuard],
+        component: ArticleComponent
+    },
+    {
         path: 'themes',
         canActivate: [AuthGuard],
         component: ThemesComponent
@@ -29,4 +42,5 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         component: ProfileComponent
     },
+
 ];

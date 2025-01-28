@@ -1,5 +1,7 @@
-package com.orion.mdd.model.dto;
+package com.orion.mdd.model.dto.auth;
 
+
+import com.orion.mdd.model.dto.ThemeDTO;
 
 public class LoginResponse{
     private Integer id;

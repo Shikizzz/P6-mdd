@@ -1,6 +1,6 @@
 package com.orion.mdd.controllers;
 
-import com.orion.mdd.model.dto.UserInformationDTO;
+import com.orion.mdd.model.dto.auth.UserInformationDTO;
 import com.orion.mdd.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
