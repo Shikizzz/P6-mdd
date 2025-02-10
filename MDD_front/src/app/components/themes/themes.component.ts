@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, Signal, signal } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { Theme } from './interfaces/theme.class';
 import { ThemeComponent } from './theme/theme.component';
 import { ThemesService } from '../../services/themes.service';
 import { SessionService } from '../../services/session.service';
 import { ThemeProps } from './interfaces/themeProps.class';
+import { map, Observable, tap } from 'rxjs';
+import { SessionInformation } from '../auth/interfaces/sessionInformation.class';
 
 
 @Component({
@@ -19,23 +21,32 @@ import { ThemeProps } from './interfaces/themeProps.class';
 })
 export class ThemesComponent implements OnInit {
 
-  public themesProps: ThemeProps[] = new Array();
+  private sessionService: SessionService = inject(SessionService)
+  private sessionInformationSig: Signal<SessionInformation | undefined> = this.sessionService.sessionInformation;
 
-  constructor(
-    public sessionService: SessionService,
-    public themesService: ThemesService,
-  ) { }
+  public themesPropsSig = computed(() =>
+    this.sessionInformationSig()!.themes.map(
+      (theme) => {
+        return this.themeToThemeProps(theme, this.customIncludes(this.sessionService.sessionInformationSig()!.themes, theme))  //Out of the array if already subscribed by the user
+      }
+    ))
+
+  constructor(public themesService: ThemesService,) { }
+
 
   ngOnInit(): void {
-    this.getThemes();
+    this.getThemesSignal();
   }
 
-  private getThemes(): void {
+
+  private getThemesSignal(): void {
     this.themesService.getThemes().subscribe({
       next: (themes: Theme[]) => {
-        this.themesProps = themes.map((theme) => {
-          return this.themeToThemeProps(theme, this.customIncludes(this.sessionService.sessionInformation!.themes, theme))  //Out of the array if already subscribed by the user
-        })
+        this.themesPropsSig = signal(
+          themes.map((theme) => {
+            return this.themeToThemeProps(theme, this.customIncludes(this.sessionService.sessionInformationSig()!.themes, theme))  //Out of the array if already subscribed by the user
+          })
+        )
       },
       // TODO add ERROR
     });

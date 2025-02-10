@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SessionService } from '../../services/session.service';
@@ -29,25 +29,25 @@ export class ProfileComponent implements OnInit {
 
   public onError = false;
 
-  public sessionInformation!: SessionInformation;
+  public sessionInformationSig = signal<SessionInformation | undefined>(undefined);
   public form!: FormGroup;
 
   public themesProps!: ThemeProps[];
 
   ngOnInit(): void {
-    this.sessionInformation = this.sessionService.sessionInformation!;
-    this.themesProps = this.themesToThemesProps(this.sessionInformation.themes);
+    this.sessionInformationSig = this.sessionService.sessionInformationSig;
+    this.themesProps = this.themesToThemesProps(this.sessionInformationSig()!.themes);
 
     this.form = this.fb.group({
       username: [
-        this.sessionInformation.username,
+        this.sessionInformationSig()!.username,
         [
           Validators.required,
           Validators.min(2),
         ]
       ],
       email: [
-        this.sessionInformation.email,
+        this.sessionInformationSig()!.email,
         [
           Validators.required,
           Validators.email
@@ -58,12 +58,12 @@ export class ProfileComponent implements OnInit {
 
   public onSubmit(): void {
     const request = this.form.value as UserInformationDTO;
-    request.id = this.sessionInformation.id;
+    request.id = this.sessionInformationSig()!.id;
     this.userService.modifyProfile(request).subscribe({
       next: (_: any) => {
-        this.sessionInformation.email = request.email;
-        this.sessionInformation.username = request.username;
-        this.sessionService.logIn(this.sessionInformation); //updating profile in frontend session
+        this.sessionInformationSig()!.email = request.email;
+        this.sessionInformationSig()!.username = request.username;
+        this.sessionService.logIn(this.sessionInformationSig()!); //updating profile in frontend session
       },
       error: _ => {
         this.onError = true

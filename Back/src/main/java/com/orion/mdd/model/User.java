@@ -24,7 +24,7 @@ public class User {
     private String password;
     @OneToMany(                             //Unidirectional
             cascade = CascadeType.DETACH,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Theme> themes = new ArrayList<>();
 

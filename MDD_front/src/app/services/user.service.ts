@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { UserInformationDTO } from "../components/auth/interfaces/userInformationDTO";
 import { Observable } from "rxjs";
+import { Message } from "../components/articles/interfaces/message.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -16,11 +17,11 @@ export class UserService {
         return this.httpClient.put<void>(`${this.pathService}`, putRequest);
     }
 
-    public themeSubscribe(themeId: number): Observable<void> {
-        return this.httpClient.put<void>(`${this.pathService}/subscribe/${themeId}`, null);
+    public themeSubscribe(themeId: number): any {
+        return this.httpClient.put(`${this.pathService}/subscribe/${themeId}`, null, { responseType: 'text' });
     }
 
-    public themeUnsubscribe(themeId: number): Observable<void> {
-        return this.httpClient.put<void>(`${this.pathService}/unSubscribe/${themeId}`, null);
+    public themeUnsubscribe(themeId: number): Observable<string> {
+        return this.httpClient.put<string>(`${this.pathService}/unSubscribe/${themeId}`, null);
     }
 }

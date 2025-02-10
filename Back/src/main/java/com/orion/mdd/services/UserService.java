@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -81,9 +82,10 @@ public class UserService {
         User user = userRepository.findByEmail(email).get(0);
         Theme themeToRemove = themeRepository.findById(themeId).get();
         List<Theme> updatedThemes = user.getThemes().stream().filter(
-                (theme) -> theme.getThemeId() != themeToRemove.getThemeId())
+                (theme) -> !theme.getThemeId().equals(themeToRemove.getThemeId()))
                 .toList();
-        user.setThemes(updatedThemes);
+        ArrayList<Theme> updatedThemesArraylist = new ArrayList<>(updatedThemes);
+        user.setThemes(updatedThemesArraylist);
         userRepository.save(user);
     }
 }

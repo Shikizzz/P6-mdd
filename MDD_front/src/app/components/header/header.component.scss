@@ -13,7 +13,7 @@
 
 img{
     padding-left: 2em;
-    height: 10em;
+    height: 8em;
 }
 
 .links{
@@ -70,6 +70,7 @@ mat-icon{
     }
     .burger{
         transform: scale(2);
+        color: black;
     }
 }
 
@@ -93,6 +94,7 @@ mat-icon{
 }
 .close{
     transform: scale(1.5);
+    color: black;
 }
 .menu_links{
     display: flex;

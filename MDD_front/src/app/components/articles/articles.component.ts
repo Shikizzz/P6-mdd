@@ -30,7 +30,7 @@ export class ArticlesComponent implements OnInit {
   }
 
   private getArticles(): void {
-    let themeIds: number[] = this.sessionService.sessionInformation!.themes.map(theme =>
+    let themeIds: number[] = this.sessionService.sessionInformationSig()!.themes.map(theme =>
       theme.themeId
     )
     this.articleService.getArticlesByThemes(themeIds).subscribe({

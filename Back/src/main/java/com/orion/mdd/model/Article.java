@@ -12,7 +12,7 @@ import java.util.List;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
+    @Column(name = "article_id")
     private Integer articleId;
     private String title;
     @ManyToOne(                              //Bidirectional
@@ -28,15 +28,11 @@ public class Article {
     private LocalDate date;
     @Size(max = 1000)
     private String content;
-    @OneToMany(                             //Unidirectional
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.EAGER
-    )
-    @JoinColumn(name = "product_id")
+    @OneToMany(mappedBy = "article")
     private List<Comment> comments = new ArrayList<>();
     public Article() {
     }
+
     public Integer getArticleId() {
         return articleId;
     }

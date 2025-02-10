@@ -9,6 +9,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Integer commentId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="article_id")
+    private Article article;
     @ManyToOne(fetch = FetchType.LAZY)     //Unidirectional
     @JoinColumn(name = "user_id")
     private User user;
@@ -17,12 +20,26 @@ public class Comment {
     public Comment() {
     }
 
+    public Comment(Article article, User user, String content) {
+        this.article = article;
+        this.user = user;
+        this.content = content;
+    }
+
     public Integer getCommentId() {
         return commentId;
     }
 
     public void setCommentId(Integer commentId) {
         this.commentId = commentId;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     public User getUser() {

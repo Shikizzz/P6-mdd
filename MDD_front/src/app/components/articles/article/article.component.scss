@@ -1,0 +1,100 @@
+.back{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: white;
+    border: 0px;
+    margin-top: 13em;
+    cursor: pointer;
+}
+.arrow{
+    margin: 2em 3em;
+    transform: scale(3);
+}
+
+.article_container{
+    margin-left: 6em;
+    margin-right: 2.5em;
+    font-size: 2em;
+}
+
+.title{
+    font-size: 1.3em;
+    font-weight: 500;
+    margin-top: 1.1em;
+}
+
+#middle{
+    margin: 3em;
+}
+
+.separator{
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    border: 1px solid;
+}
+
+.comments_div{
+    width: 88%
+}
+.comment_container{
+    width: 100%;
+    display: flex;
+}
+.author{
+    display: inline-block;
+    width: 15%;
+    margin-top: 0;
+    padding-left: 2em;
+}
+.comment_div{
+    display: inline-block;
+    width: 85%;
+    background-color: rgb(240, 240, 240);
+    margin-bottom: 1em;
+    border-radius: 0.8em;
+}
+.comment_content{
+    margin: 0;
+    padding : 0.6em 1em 1em 0.6em;
+}
+
+
+.send_comment{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    width: 100%;
+   
+}
+.form{
+    width: 85%;
+    display: inline-block;
+    margin-left: 2em;
+}
+.input{
+    padding-left: 0.4em;
+    padding-top: 0.4em;
+    width: 100%;
+    height: 4em;
+    font-size: 1.4em;
+    border-radius: 1em;
+    border: 2px solid;
+}
+
+.button_container{
+    width: fit-content;
+    height: fit-content;
+    margin-left: 3.5em;
+}
+.send_button{
+    display: inline-block;
+    width: 12%;
+    background-color: white;
+    border: 0px;
+    cursor: pointer;
+}
+.send{
+    transform: scale(4) rotate(-45deg);
+    color: rgba(119,99,196,255);
+}

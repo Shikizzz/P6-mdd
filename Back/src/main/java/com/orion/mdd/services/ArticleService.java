@@ -54,7 +54,7 @@ public class ArticleService {
         return articlePreviews;
     }
 
-    private void createArticlePreviewTypeMapIfNotDone(){
+    private void createArticlePreviewTypeMapIfNotDone(){ //Helper, to map Article to ArticlePreview
         TypeMap<Article, ArticlePreview> typeMap = modelMapper.getTypeMap(Article.class, ArticlePreview.class);
         if (typeMap == null) {
             typeMap = modelMapper.createTypeMap(Article.class, ArticlePreview.class);
@@ -66,24 +66,28 @@ public class ArticleService {
 
     public ReturnArticleDTO getArticleById(Integer id) {
         Article article = articleRepository.findById(id).get();
-        if (article.getComments().isEmpty()) {
-            article.setComments(new ArrayList<>());
-        }
         createReturnArticleDTOTypeMapIfNotDone();
         ReturnArticleDTO articleDTO = modelMapper.map(article, ReturnArticleDTO.class);
+        for(int i=0; i<articleDTO.getComments().size(); i++){
+            articleDTO.getComments().get(i).setAuthor(article.getUser().getUsername());
+        }
         return articleDTO;
     }
 
-    private void createReturnArticleDTOTypeMapIfNotDone(){
+    private void createReturnArticleDTOTypeMapIfNotDone(){ //Helper, to map Article to ReturnArticleDTO
         TypeMap<Article, ReturnArticleDTO> typeMap = modelMapper.getTypeMap(Article.class, ReturnArticleDTO.class);
         if (typeMap == null) {
             typeMap = modelMapper.createTypeMap(Article.class, ReturnArticleDTO.class);
             typeMap.addMappings(mapper -> {
                 mapper.map(article -> article.getUser().getUsername() , ReturnArticleDTO::setAuthor); //mapping User Object to its Username
-                mapper.map(article ->
-                        article.getTheme().getTitle(), ReturnArticleDTO::setTheme);
-                mapper.map(article ->
-                        (article.getComments().stream().map((element) -> modelMapper.map(element, CommentDTO.class)).collect(Collectors.toList()), ReturnArticleDTO::setComments);
+                mapper.map(article -> article.getTheme().getTitle(), ReturnArticleDTO::setTheme);
+                mapper.map(article -> {
+                    if (article.getComments() == null) {
+                        return null;
+                    }
+                    return article.getComments().stream().map((element) -> new CommentDTO(element.getCommentId(), element.getUser().getUsername(), element.getContent()))
+                            .collect(Collectors.toList());
+                }, ReturnArticleDTO::setComments);
             });
         }
     }

@@ -3,14 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
-import { SessionService } from '../../../services/session.service';
 import { HeaderComponent } from '../../header/header.component';
 import { ThemesService } from '../../../services/themes.service';
 import { Theme } from '../../themes/interfaces/theme.class';
 import { NgFor } from '@angular/common';
 import { ArticleService } from '../../../services/article.service';
 import { PostArticle } from '../interfaces/postArticle.interface';
-import { Article } from '../interfaces/article.class';
 
 @Component({
   selector: 'app-add-article',

@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal, input, OnInit } from '@angular/core';
 import { Theme } from '../interfaces/theme.class';
 import { UserService } from '../../../services/user.service';
 import { SessionService } from '../../../services/session.service';
 import { ThemeProps } from '../interfaces/themeProps.class';
+import { Message } from '../../articles/interfaces/message.interface';
 
 
 @Component({
@@ -13,7 +14,8 @@ import { ThemeProps } from '../interfaces/themeProps.class';
   styleUrl: './theme.component.scss'
 })
 export class ThemeComponent {
-  @Input() themeProps!: ThemeProps;
+  themeProps = input.required<ThemeProps>();
+
   private onError: boolean = false;
 
   constructor(
@@ -22,20 +24,23 @@ export class ThemeComponent {
   ) { };
 
   public onSubscribe(): void {
-    this.userService.themeSubscribe(this.themeProps.theme.themeId).subscribe({
-      next: (_: any) => {
-        this.sessionService.addTheme(this.themeProps.theme);
+    this.userService.themeSubscribe(this.themeProps().theme.themeId).subscribe({
+      next: (response: any) => {
+        this.sessionService.addTheme(this.themeProps().theme);
+        console.log(response)
       },
-      error: _ => {
+      error: (response: any) => {
         this.onError = true
+        console.log(response)
       },
     });
   }
 
   public onUnsubscribe(): void {
-    this.userService.themeUnsubscribe(this.themeProps.theme.themeId).subscribe({
+    this.userService.themeUnsubscribe(this.themeProps().theme.themeId).subscribe({
       next: (_: any) => {
-        this.sessionService.addTheme(this.themeProps.theme);
+        this.sessionService.addTheme(this.themeProps().theme);
+        console.log(this.sessionService.sessionInformationSig());
       },
       error: _ => {
         this.onError = true

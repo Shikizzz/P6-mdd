@@ -1,1 +1,58 @@
+
 <app-header></app-header>
+
+<button class="back" routerLink="/articles">
+    <mat-icon class="arrow">keyboard_backspace</mat-icon>
+</button>
+
+<div class="article_container">
+    <h2 class="title">{{article.title}}</h2>
+
+        <span class="metadata">{{article.date}}</span>
+        <span class="metadata" id="middle">{{article.author}}</span>
+        <span class="metadata">{{article.theme}}</span>
+
+    <p class="article_content">Content: {{article.content}}</p>
+
+    <div class="separator"></div>
+
+
+
+
+    
+
+
+    <div class="comments_div">
+
+        <p class="subtitle">Commentaires</p>
+    
+
+
+    @if (article.comments !== null) {
+        @for (comment of article.comments; track comment.commentId) {
+            <div class="comment_container">
+                <p class="author">{{comment.author}}</p>
+                <div class="comment_div">
+                    <p class="comment_content">{{comment.content}}</p>
+                </div>
+            </div>
+        }
+    }
+    </div>
+
+    <div class="send_comment">
+        <form [formGroup]="form" class="form">
+            <div class="form_input">
+                <textarea class="input" type="text" formControlName="content" placeholder="Écrivez ici votre commentaire"></textarea>
+            </div>
+        </form>
+        <div class="button_container">
+        <button class="send_button" (click)="onClick()">
+            <mat-icon class="send">send</mat-icon>
+        </button>
+        </div>
+    </div>
+    
+    
+</div>
+

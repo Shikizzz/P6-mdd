@@ -1,17 +1,33 @@
 package com.orion.mdd.model.dto;
 
-import com.orion.mdd.model.User;
-
 public class CommentDTO {
-    private User user;
+    private Integer commentId;
+    private String author;
     private String content;
 
-    public User getUser() {
-        return user;
+    public CommentDTO() {
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public CommentDTO(Integer commentId, String author, String content) {
+        this.commentId = commentId;
+        this.author = author;
+        this.content = content;
+    }
+
+    public Integer getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getContent() {

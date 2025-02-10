@@ -23,8 +23,6 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   public isLogged!: boolean;
-  public sessionInformation!: SessionInformation;
-  public activeRoute!: String;
 
   public menuIsClicked: boolean = false;
 

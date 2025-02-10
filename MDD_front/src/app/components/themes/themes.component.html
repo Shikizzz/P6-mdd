@@ -1,7 +1,7 @@
 <app-header></app-header>
 
 <div class="page_container">
-    @for (themeElement of themesProps; track themeElement.theme.themeId) {
+    @for (themeElement of themesPropsSig(); track themeElement.theme.themeId) {
         <app-theme class="theme" [themeProps]="themeElement"></app-theme>
     }
 </div>

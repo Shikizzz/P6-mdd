@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { SessionInformation } from "../components/auth/interfaces/sessionInformation.class";
 import { Router } from "@angular/router";
@@ -14,7 +14,10 @@ export class SessionService {
     }
 
     public isLogged = false;
-    public sessionInformation: SessionInformation | undefined;
+    public sessionInformationSig = signal<SessionInformation | undefined>(undefined);
+    get sessionInformation() {
+        return this.sessionInformationSig.asReadonly();
+    }
 
     private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
 
@@ -23,14 +26,13 @@ export class SessionService {
     }
 
     public logIn(user: SessionInformation): void {
-        this.sessionInformation = user;
+        this.sessionInformationSig.update(value => { return user });
         this.isLogged = true;
         this.next();
     }
 
     public logOut(): void {
         localStorage.removeItem('jwtToken');
-        this.sessionInformation = undefined;
         this.isLogged = false;
         this.next();
         this.router.navigate(['/auth/login'])
@@ -41,11 +43,23 @@ export class SessionService {
     }
 
     public addTheme(theme: Theme): void {
-        this.sessionInformation?.themes.push(theme);
+        this.sessionInformationSig.update(sessionInformation => {
+            let newArray = this.cloneArray(sessionInformation!.themes);
+            newArray.push(theme)
+            return { ...sessionInformation!, themes: newArray };
+        });
+        console.log("Theme added in sessionInformation")
+        console.log(this.sessionInformationSig()?.themes)
     }
 
     public removeTheme(theme: Theme): void {
-        const index = this.sessionInformation?.themes.indexOf(theme); //is defined because else, this function won't be called
-        this.sessionInformation?.themes.splice(index!, 1);
+        const index = this.sessionInformationSig()?.themes.indexOf(theme);
+        this.sessionInformationSig()?.themes.splice(index!, 1);
+    }
+
+    private cloneArray(themes: Theme[]): Theme[] {
+        let newArray: Theme[] = [];
+        themes.forEach(value => newArray.push(value));
+        return newArray;
     }
 }
