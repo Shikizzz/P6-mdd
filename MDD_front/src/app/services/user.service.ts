@@ -21,7 +21,7 @@ export class UserService {
         return this.httpClient.put(`${this.pathService}/subscribe/${themeId}`, null, { responseType: 'text' });
     }
 
-    public themeUnsubscribe(themeId: number): Observable<string> {
-        return this.httpClient.put<string>(`${this.pathService}/unSubscribe/${themeId}`, null);
+    public themeUnsubscribe(themeId: number): any {
+        return this.httpClient.put(`${this.pathService}/unSubscribe/${themeId}`, null, { responseType: 'text' });
     }
 }

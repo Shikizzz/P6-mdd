@@ -27,22 +27,19 @@ export class ThemeComponent {
     this.userService.themeSubscribe(this.themeProps().theme.themeId).subscribe({
       next: (response: any) => {
         this.sessionService.addTheme(this.themeProps().theme);
-        console.log(response)
       },
       error: (response: any) => {
         this.onError = true
-        console.log(response)
       },
     });
   }
 
   public onUnsubscribe(): void {
     this.userService.themeUnsubscribe(this.themeProps().theme.themeId).subscribe({
-      next: (_: any) => {
-        this.sessionService.addTheme(this.themeProps().theme);
-        console.log(this.sessionService.sessionInformationSig());
+      next: (response: any) => {
+        this.sessionService.removeTheme(this.themeProps().theme);
       },
-      error: _ => {
+      error: (response: any) => {
         this.onError = true
       },
     });

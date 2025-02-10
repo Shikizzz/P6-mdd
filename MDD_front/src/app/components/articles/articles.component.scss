@@ -19,18 +19,17 @@
     width: 92%;
     margin: auto;
     margin-top: 2em;
-    display: flex;
     justify-content: space-between;
 }
 
 .article{
     display: inline-block;
-    width: 47%;
+    width: 50%;
     cursor: pointer;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
     .article{
-    width: 100%
+        width: 100%
     }
 }

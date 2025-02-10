@@ -48,18 +48,26 @@ export class SessionService {
             newArray.push(theme)
             return { ...sessionInformation!, themes: newArray };
         });
-        console.log("Theme added in sessionInformation")
-        console.log(this.sessionInformationSig()?.themes)
     }
 
     public removeTheme(theme: Theme): void {
-        const index = this.sessionInformationSig()?.themes.indexOf(theme);
-        this.sessionInformationSig()?.themes.splice(index!, 1);
+        let newArray = this.removeThemeFromArray(theme, this.sessionInformationSig()!.themes);
+        this.sessionInformationSig.update(sessionInformation => {
+            return { ...sessionInformation!, themes: newArray };
+        });
     }
 
     private cloneArray(themes: Theme[]): Theme[] {
         let newArray: Theme[] = [];
         themes.forEach(value => newArray.push(value));
         return newArray;
+    }
+
+    private removeThemeFromArray(themeToRemove: Theme, themeArray: Theme[]): Theme[] {
+        let newArray = this.cloneArray(themeArray);
+        return newArray.filter(theme =>
+            theme.themeId != themeToRemove.themeId
+        )
+
     }
 }
