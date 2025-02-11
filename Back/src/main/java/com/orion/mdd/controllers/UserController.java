@@ -1,6 +1,6 @@
 package com.orion.mdd.controllers;
 
-import com.orion.mdd.model.dto.auth.UserInformationDTO;
+import com.orion.mdd.model.dto.auth.ModifyRequest;
 import com.orion.mdd.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class UserController {
     }
 
     @PutMapping(value= "", consumes="application/json")
-    public ResponseEntity<?> putUser(@Valid@RequestBody UserInformationDTO request) {
+    public ResponseEntity<?> putUser(@Valid@RequestBody ModifyRequest request) {
         userService.putUser(request);
         return ResponseEntity.ok("User Modification Successfull");
     }

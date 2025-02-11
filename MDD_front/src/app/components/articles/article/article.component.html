@@ -6,32 +6,25 @@
 </button>
 
 <div class="article_container">
-    <h2 class="title">{{article.title}}</h2>
+    <h2 class="title">{{_article().title}}</h2>
+    <div class="metadata_container">
+        <span class="metadata">{{_article().date}}</span>
+        <span class="metadata" id="middle">{{_article().author}}</span>
+        <span class="metadata">{{_article().theme}}</span>
+    </div>
+    <p class="article_content">Content: {{_article().content}}</p>
 
-        <span class="metadata">{{article.date}}</span>
-        <span class="metadata" id="middle">{{article.author}}</span>
-        <span class="metadata">{{article.theme}}</span>
-
-    <p class="article_content">Content: {{article.content}}</p>
 
     <div class="separator"></div>
 
 
-
-
-    
-
-
-    <div class="comments_div">
-
-        <p class="subtitle">Commentaires</p>
-    
-
-
-    @if (article.comments !== null) {
-        @for (comment of article.comments; track comment.commentId) {
+    <p class="subtitle">Commentaires</p>
+    @if (_article().comments !== null) {
+        @for (comment of _article().comments; track $index) {
             <div class="comment_container">
-                <p class="author">{{comment.author}}</p>
+                <div>
+                    <p class="author">{{comment.author}}</p>
+                </div>
                 <div class="comment_div">
                     <p class="comment_content">{{comment.content}}</p>
                 </div>
@@ -40,19 +33,17 @@
     }
     </div>
 
-    <div class="send_comment">
-        <form [formGroup]="form" class="form">
-            <div class="form_input">
-                <textarea class="input" type="text" formControlName="content" placeholder="Écrivez ici votre commentaire"></textarea>
-            </div>
-        </form>
-        <div class="button_container">
-        <button class="send_button" (click)="onClick()">
-            <mat-icon class="send">send</mat-icon>
-        </button>
+<div class="send_comment">
+    <form [formGroup]="form" class="form">
+        <div class="form_input">
+            <textarea class="input" type="text" formControlName="content" placeholder="Écrivez ici votre commentaire"></textarea>
         </div>
-    </div>
-    
+
+        <div class="button_container">
+            <button class="send_button" (click)="onClick()">
+                <mat-icon class="send">send</mat-icon>
+            </button>
+        </div>
+    </form>
     
 </div>
-

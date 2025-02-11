@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Article } from '../interfaces/article.class';
 import { HeaderComponent } from '../../header/header.component';
@@ -8,6 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { CommentService } from '../../../services/comment.service';
 import { PostComment } from '../interfaces/postComment.class';
 import { CommentContent } from '../interfaces/commentContent.interface';
+import { Comment } from '../interfaces/comment.class';
+import { SessionService } from '../../../services/session.service';
 
 @Component({
   selector: 'app-article',
@@ -25,18 +27,18 @@ import { CommentContent } from '../interfaces/commentContent.interface';
 })
 export class ArticleComponent implements OnInit {
 
-  public article!: Article;
+  public _article!: WritableSignal<Article>;
   public form!: FormGroup;
 
   constructor(
     private commentService: CommentService,
     private route: ActivatedRoute,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private sessionService: SessionService) {
   }
 
   ngOnInit(): void {
-
-    this.article = this.route.snapshot.data['articleDetails'];
+    this._article = signal(this.route.snapshot.data['articleDetails']);
 
     this.form = this.fb.group({
       content: [
@@ -48,11 +50,23 @@ export class ArticleComponent implements OnInit {
 
   public onClick(): void {
     const commentContent = this.form.value as CommentContent;
-    let comment: PostComment = new PostComment(commentContent.content, this.article.articleId);
+    let comment: PostComment = new PostComment(commentContent.content, this._article().articleId);
     this.commentService.addComment(comment).subscribe({
       next: (_: void) => {
+        this._article.update(article => {
+          let newArray: Comment[] = this.cloneArray(article.comments);
+          let comment: Comment = new Comment(this.sessionService.sessionInformationSig()!.username, commentContent.content);
+          newArray.push(comment)
+          return { ...article, comments: newArray };
+        })
       },
     });
+  }
+
+  private cloneArray(comments: Comment[]): Comment[] {
+    let newArray: Comment[] = [];
+    comments.forEach(value => newArray.push(value));
+    return newArray;
   }
 
 }

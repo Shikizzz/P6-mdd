@@ -70,13 +70,8 @@ input{
     width: 50%;
 }
 
-@media (max-width: 1200px) {
-    .form_input{
-        width: 50%;
-    }
-}
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
 
     .title{
         margin: 0.8em auto;

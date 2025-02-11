@@ -1,5 +1,5 @@
 import { Theme } from "../../themes/interfaces/theme.class";
-import { Comment } from "../interfaces/comment.interface";
+import { Comment } from "./comment.class";
 
 export class Article {
     constructor(

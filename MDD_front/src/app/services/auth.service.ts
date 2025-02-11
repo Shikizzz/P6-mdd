@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { RegisterRequest } from "../components/auth/interfaces/registerRequest.interface";
 import { LoginRequest } from "../components/auth/interfaces/loginRequest.interface";
-import { UserInformationDTO } from "../components/auth/interfaces/userInformationDTO";
+import { UserInformationDTO } from "../components/auth/interfaces/userInformationDTO.interface";
 import { AuthSuccess } from "../components/auth/interfaces/authSuccess.interface";
 
 @Injectable({

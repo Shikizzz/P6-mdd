@@ -12,8 +12,8 @@ export class CommentService {
 
     constructor(private httpClient: HttpClient) { }
 
-    public addComment(comment: PostComment): Observable<void> {
-        return this.httpClient.post<void>(`${this.pathService}`, comment);
+    public addComment(comment: PostComment): any {
+        return this.httpClient.post(`${this.pathService}`, comment, { responseType: 'text' });
     }
 
 }

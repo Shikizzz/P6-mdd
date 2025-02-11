@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoginRequest } from '../interfaces/loginRequest.interface';
 import { SessionInformation } from '../interfaces/sessionInformation.class';
 import { NgIf } from '@angular/common';
-import { UserInformationDTO } from '../interfaces/userInformationDTO';
+import { UserInformationDTO } from '../interfaces/userInformationDTO.interface';
 import { AuthSuccess } from '../interfaces/authSuccess.interface';
 
 @Component({

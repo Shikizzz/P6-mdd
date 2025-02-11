@@ -14,7 +14,9 @@ export class SessionService {
     }
 
     public isLogged = false;
+
     public sessionInformationSig = signal<SessionInformation | undefined>(undefined);
+
     get sessionInformation() {
         return this.sessionInformationSig.asReadonly();
     }

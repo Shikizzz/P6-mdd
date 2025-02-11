@@ -85,7 +85,7 @@ public class ArticleService {
                     if (article.getComments() == null) {
                         return null;
                     }
-                    return article.getComments().stream().map((element) -> new CommentDTO(element.getCommentId(), element.getUser().getUsername(), element.getContent()))
+                    return article.getComments().stream().map((element) -> new CommentDTO(element.getUser().getUsername(), element.getContent()))
                             .collect(Collectors.toList());
                 }, ReturnArticleDTO::setComments);
             });

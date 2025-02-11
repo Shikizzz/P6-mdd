@@ -5,7 +5,7 @@ import com.orion.mdd.model.User;
 import com.orion.mdd.model.dto.auth.LoginResponse;
 import com.orion.mdd.model.dto.auth.RegisterRequest;
 import com.orion.mdd.model.dto.ThemeDTO;
-import com.orion.mdd.model.dto.auth.UserInformationDTO;
+import com.orion.mdd.model.dto.auth.ModifyRequest;
 import com.orion.mdd.repositories.ThemeRepository;
 import com.orion.mdd.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -65,10 +65,11 @@ public class UserService {
         user.setPassword(encoder.encode(registerRequest.password()));
         userRepository.save(user);
     }
-    public void putUser(UserInformationDTO request){
+    public void putUser(ModifyRequest request){
         User user = userRepository.findById(request.getId()).get(); // ID in DB, because sent from front, that get it from Backend's DB
         user.setEmail(request.getEmail());
         user.setUsername(request.getUsername());
+        user.setPassword(encoder.encode(request.getPassword()));
         userRepository.save(user);
     }
 

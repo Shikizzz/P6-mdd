@@ -43,7 +43,6 @@ export class ThemesComponent implements OnInit {
     this.themesPropsSig = computed(() =>
       this.themes.map(
         (theme) => {
-          console.log("theme is " + theme)
           return this.themeToThemeProps(theme, this.customIncludes(this.sessionService.sessionInformationSig()!.themes, theme))  //Out of the array if already subscribed by the user
         }
       )
