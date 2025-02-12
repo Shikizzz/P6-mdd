@@ -4,7 +4,7 @@ import { Theme } from './interfaces/theme.class';
 import { ThemeComponent } from './theme/theme.component';
 import { SessionService } from '../../services/session.service';
 import { ThemeProps } from './interfaces/themeProps.class';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, Subscription, tap } from 'rxjs';
 import { SessionInformation } from '../auth/interfaces/sessionInformation.class';
 import { ThemeService } from '../../services/theme.service';
 
@@ -24,26 +24,31 @@ export class ThemesComponent implements OnInit {
   private sessionService: SessionService = inject(SessionService)
   private themeService: ThemeService = inject(ThemeService)
 
-  private sessionInformationSig: Signal<SessionInformation | undefined> = this.sessionService.sessionInformation;
+  public onError: Boolean = false;
+  public subscription!: Subscription;
   private themes$: Observable<Theme[]> = this.themeService.getThemes();
   private themes!: Theme[];
 
 
-  public themesPropsSig: Signal<ThemeProps[]> = signal([]);
+  public _themesProps: Signal<ThemeProps[]> = signal([]);
 
 
   ngOnInit(): void {
-    this.themes$.subscribe(themes => {
+    this.subscription = this.themes$.subscribe(themes => {
       this.themes = themes
-      this.initThemesPropsSig();
+      this.init_themesProps();
     })
   }
 
-  private initThemesPropsSig(): void {
-    this.themesPropsSig = computed(() =>
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private init_themesProps(): void {
+    this._themesProps = computed(() =>
       this.themes.map(
         (theme) => {
-          return this.themeToThemeProps(theme, this.customIncludes(this.sessionService.sessionInformationSig()!.themes, theme))  //Out of the array if already subscribed by the user
+          return this.themeToThemeProps(theme, this.customIncludes(this.sessionService._sessionInformation()!.themes, theme))  //Out of the array if already subscribed by the user
         }
       )
     )

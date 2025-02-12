@@ -23,6 +23,7 @@
         <div class="form_input">
             <textarea class="input" type="text" id="content" formControlName="content" placeholder="Contenu de l'article"></textarea>
         </div>
+        @if(onError) {<p class="error">An error occurred</p>}
         <button class="submit" type="submit" (click)="onSubmit()">Créer</button>
     </form>
 

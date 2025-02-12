@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Article } from '../interfaces/article.class';
 import { HeaderComponent } from '../../header/header.component';
@@ -10,6 +10,7 @@ import { PostComment } from '../interfaces/postComment.class';
 import { CommentContent } from '../interfaces/commentContent.interface';
 import { Comment } from '../interfaces/comment.class';
 import { SessionService } from '../../../services/session.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-article',
@@ -25,8 +26,10 @@ import { SessionService } from '../../../services/session.service';
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss'
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, OnDestroy {
 
+  public onError: Boolean = false;
+  public subscription: Subscription | undefined;
   public _article!: WritableSignal<Article>;
   public form!: FormGroup;
 
@@ -48,18 +51,28 @@ export class ArticleComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription != undefined) {
+      this.subscription.unsubscribe()
+    }
+  }
+
   public onClick(): void {
     const commentContent = this.form.value as CommentContent;
     let comment: PostComment = new PostComment(commentContent.content, this._article().articleId);
-    this.commentService.addComment(comment).subscribe({
+    this.subscription = this.commentService.addComment(comment).subscribe({
       next: (_: void) => {
         this._article.update(article => {
           let newArray: Comment[] = this.cloneArray(article.comments);
-          let comment: Comment = new Comment(this.sessionService.sessionInformationSig()!.username, commentContent.content);
+          let comment: Comment = new Comment(this.sessionService._sessionInformation()!.username, commentContent.content);
           newArray.push(comment)
           return { ...article, comments: newArray };
         })
       },
+      error: (error: any) => {
+        this.onError = true;
+        console.log(error);
+      }
     });
   }
 

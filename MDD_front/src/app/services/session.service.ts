@@ -15,10 +15,10 @@ export class SessionService {
 
     public isLogged = false;
 
-    public sessionInformationSig = signal<SessionInformation | undefined>(undefined);
+    public _sessionInformation = signal<SessionInformation | undefined>(undefined);
 
     get sessionInformation() {
-        return this.sessionInformationSig.asReadonly();
+        return this._sessionInformation.asReadonly();
     }
 
     private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
@@ -28,7 +28,7 @@ export class SessionService {
     }
 
     public logIn(user: SessionInformation): void {
-        this.sessionInformationSig.update(value => { return user });
+        this._sessionInformation.update(value => { return user });
         this.isLogged = true;
         this.next();
     }
@@ -45,7 +45,7 @@ export class SessionService {
     }
 
     public addTheme(theme: Theme): void {
-        this.sessionInformationSig.update(sessionInformation => {
+        this._sessionInformation.update(sessionInformation => {
             let newArray = this.cloneArray(sessionInformation!.themes);
             newArray.push(theme)
             return { ...sessionInformation!, themes: newArray };
@@ -53,8 +53,8 @@ export class SessionService {
     }
 
     public removeTheme(theme: Theme): void {
-        let newArray = this.removeThemeFromArray(theme, this.sessionInformationSig()!.themes);
-        this.sessionInformationSig.update(sessionInformation => {
+        let newArray = this.removeThemeFromArray(theme, this._sessionInformation()!.themes);
+        this._sessionInformation.update(sessionInformation => {
             return { ...sessionInformation!, themes: newArray };
         });
     }

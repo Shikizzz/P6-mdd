@@ -5,6 +5,7 @@
     <button class="addArticle" (click)="onAddArticle()">Créer un article</button>
 </div>
 
+@if(onError) {<p class="error">An error occurred, Unable to fin the articles</p>}
 
 <div class="articles_container">
     @for (articleElement of articles; track articleElement.articleId) {

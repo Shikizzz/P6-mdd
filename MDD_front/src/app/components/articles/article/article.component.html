@@ -33,17 +33,16 @@
     }
     </div>
 
-<div class="send_comment">
-    <form [formGroup]="form" class="form">
-        <div class="form_input">
-            <textarea class="input" type="text" formControlName="content" placeholder="Écrivez ici votre commentaire"></textarea>
-        </div>
-
-        <div class="button_container">
-            <button class="send_button" (click)="onClick()">
-                <mat-icon class="send">send</mat-icon>
-            </button>
-        </div>
-    </form>
-    
-</div>
+    @if(onError) {<p class="error">An error occurred</p>}
+    <div class="send_comment">
+        <form [formGroup]="form" class="form">
+            <div class="form_input">
+                <textarea class="input" type="text" formControlName="content" placeholder="Écrivez ici votre commentaire"></textarea>
+            </div>
+            <div class="button_container">
+                <button class="send_button" (click)="onClick()">
+                    <mat-icon class="send">send</mat-icon>
+                </button>
+            </div>
+        </form>   
+    </div>

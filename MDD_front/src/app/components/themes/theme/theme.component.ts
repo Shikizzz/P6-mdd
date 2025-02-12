@@ -1,9 +1,8 @@
-import { Component, Input, signal, input, OnInit } from '@angular/core';
-import { Theme } from '../interfaces/theme.class';
+import { Component, input, OnDestroy } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { SessionService } from '../../../services/session.service';
 import { ThemeProps } from '../interfaces/themeProps.class';
-import { Message } from '../../articles/interfaces/message.interface';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,34 +12,49 @@ import { Message } from '../../articles/interfaces/message.interface';
   templateUrl: './theme.component.html',
   styleUrl: './theme.component.scss'
 })
-export class ThemeComponent {
+export class ThemeComponent implements OnDestroy {
   themeProps = input.required<ThemeProps>();
 
-  private onError: boolean = false;
+  public onError: boolean = false;
+  public subscription: Subscription | undefined;
+
 
   constructor(
     private sessionService: SessionService,
     private userService: UserService,
   ) { };
 
+  ngOnDestroy(): void {
+    this.unSubscribeObservableIfSubscription();
+  }
+  public unSubscribeObservableIfSubscription(): void {
+    if (this.subscription != undefined) {
+      this.subscription.unsubscribe()
+    }
+  }
+
   public onSubscribe(): void {
-    this.userService.themeSubscribe(this.themeProps().theme.themeId).subscribe({
-      next: (response: any) => {
+    this.unSubscribeObservableIfSubscription();
+    this.subscription = this.userService.themeSubscribe(this.themeProps().theme.themeId).subscribe({
+      next: () => {
         this.sessionService.addTheme(this.themeProps().theme);
       },
-      error: (response: any) => {
-        this.onError = true
+      error: (error: any) => {
+        this.onError = true;
+        console.log(error);
       },
     });
   }
 
   public onUnsubscribe(): void {
-    this.userService.themeUnsubscribe(this.themeProps().theme.themeId).subscribe({
-      next: (response: any) => {
+    this.unSubscribeObservableIfSubscription();
+    this.subscription = this.userService.themeUnsubscribe(this.themeProps().theme.themeId).subscribe({
+      next: () => {
         this.sessionService.removeTheme(this.themeProps().theme);
       },
-      error: (response: any) => {
-        this.onError = true
+      error: (error: any) => {
+        this.onError = true;
+        console.log(error);
       },
     });
   }

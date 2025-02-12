@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,7 +9,7 @@ import { NgFor } from '@angular/common';
 import { ArticleService } from '../../../services/article.service';
 import { PostArticle } from '../interfaces/postArticle.interface';
 import { ThemeService } from '../../../services/theme.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-article',
@@ -24,22 +24,23 @@ import { Observable } from 'rxjs';
   templateUrl: './add-article.component.html',
   styleUrl: './add-article.component.scss'
 })
-export class AddArticleComponent {
+export class AddArticleComponent implements OnInit, OnDestroy {
 
   private themeService: ThemeService = inject(ThemeService)
-
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private articleService: ArticleService) { }
 
+  public onError: Boolean = false;
+  public subscription!: Subscription;
   public form!: FormGroup;
   public themes$: Observable<Theme[]> = this.themeService.themes$;
   public themes: Theme[] = this.themeService.themes;
 
 
   ngOnInit(): void {
-    this.themes$.subscribe(themes => {
+    this.subscription = this.themes$.subscribe(themes => {
       this.themes = themes
     })
 
@@ -59,12 +60,21 @@ export class AddArticleComponent {
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
+  }
+
 
   public onSubmit() {
     let request: PostArticle = this.form.value as PostArticle;
-    this.articleService.postArticle(request).subscribe({
+    this.subscription.unsubscribe();
+    this.subscription = this.articleService.postArticle(request).subscribe({
       next: (_: any) => {
         this.router.navigate(['/articles'])
+      },
+      error: (error: any) => {
+        this.onError = true;
+        console.log(error);
       }
     });
   }

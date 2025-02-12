@@ -11,7 +11,7 @@ export function jwtInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): 
     }
 
     const headers = new HttpHeaders({
-        Authorization: `Bearer ${sessionService.sessionInformationSig()!.token}`
+        Authorization: `Bearer ${sessionService._sessionInformation()!.token}`
     });
 
     const newReq = req.clone({

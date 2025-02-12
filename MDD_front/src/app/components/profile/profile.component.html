@@ -13,6 +13,7 @@
         <div class="form_input">
             <input type="password" id="password" formControlName="password">
         </div>
+        @if(onError) {<p class="error">An error occurred</p>}
         <button class="submit" type="submit" (click)="onSubmit()">Sauvegarder</button>
     </form>
     <button class="disconnect" (click)="onDisconnect()">Se déconnecter</button>
@@ -23,7 +24,7 @@
 <div class="subscribes">
     <h2 class="title">Abonnements</h2>
 
-    @for (themeElement of themesPropsSig(); track themeElement.theme.themeId) {
+    @for (themeElement of _themesProps(); track themeElement.theme.themeId) {
         <app-theme class="theme" [themeProps]="themeElement"></app-theme>
     }
 </div>

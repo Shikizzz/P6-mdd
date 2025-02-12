@@ -7,6 +7,8 @@
     @else {
         <button class="subscribe" (click)="onUnsubscribe()">Se désabonner</button>
     }
+
+    @if(onError) {<p class="error">An error occurred</p>}
     
 </div>
 

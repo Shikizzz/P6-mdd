@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -10,6 +10,7 @@ import { SessionInformation } from '../interfaces/sessionInformation.class';
 import { NgIf } from '@angular/common';
 import { UserInformationDTO } from '../interfaces/userInformationDTO.interface';
 import { AuthSuccess } from '../interfaces/authSuccess.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ import { AuthSuccess } from '../interfaces/authSuccess.interface';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
     private fb: FormBuilder,
@@ -33,13 +34,13 @@ export class LoginComponent implements OnInit {
   }
 
   public onError = false;
-
+  public loginSubscription: Subscription | undefined;
+  public authenticateSubscription: Subscription | undefined;
   public loginForm!: FormGroup;
 
   ngOnInit(): void {
 
     let token: string | null = localStorage.getItem("jwtToken");
-
     if (token !== null) { this.authenticateUser(token) }
 
     this.loginForm = this.fb.group({
@@ -61,9 +62,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.loginSubscription != undefined) {
+      this.loginSubscription.unsubscribe()
+    }
+    if (this.authenticateSubscription != undefined) {
+      this.authenticateSubscription.unsubscribe()
+    }
+  }
+
   public onSubmit(): void {
     const loginRequest = this.loginForm.value as LoginRequest;
-    this.authService.login(loginRequest).subscribe({
+    this.loginSubscription = this.authService.login(loginRequest).subscribe({
       next: (tokenObject: AuthSuccess) => {
         localStorage.setItem('jwtToken', tokenObject.token); //for future connections
         this.authenticateUser(tokenObject.token);
@@ -76,7 +86,7 @@ export class LoginComponent implements OnInit {
   }
 
   public authenticateUser(token: string): void {
-    this.authService.authenticate(token).subscribe({
+    this.authenticateSubscription = this.authService.authenticate(token).subscribe({
       next: (user: UserInformationDTO) => {
         let sessionInformation: SessionInformation = new SessionInformation(
           token, user.id, user.username, user.email, user.themes

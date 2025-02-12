@@ -20,19 +20,36 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
+    /**
+     * This adds an article in database
+     * @param postArticleRequest an Object containing: theme (Integer, the Id of the Theme), title (String, the article's title), content (String, the article's content)
+     * @param authentication to get the User posting the article
+     * @return Http200 response, no body
+     */
     @PostMapping
-    public ResponseEntity<?> addArticle(Authentication authentication,@Valid @RequestBody PostArticleRequest request) {
-        articleService.addArticle(request, authentication.getName());
+    public ResponseEntity<?> addArticle(Authentication authentication,@Valid @RequestBody PostArticleRequest postArticleRequest) {
+        articleService.addArticle(postArticleRequest, authentication.getName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    /**
+     * This gets all the Articles concerning given Themes
+     * @param themeIds , an Array of Integer reprensenting the Ids of all the themes the user is subscribed
+     * @return All the articles with the Themes given
+     */
     @PostMapping("/get")
-    public ResponseEntity<?> getArticlesByThemes(@RequestBody Integer[] ThemeIds) {
-        ArticlePreview[] articles = articleService.getArticlesByThemeIds(ThemeIds);
+    public ResponseEntity<ArticlePreview[]> getArticlesByThemes(@RequestBody Integer[] themeIds) {
+        ArticlePreview[] articles = articleService.getArticlesByThemeIds(themeIds);
         return ResponseEntity.ok(articles);
     }
 
+    /**
+     * This gets all the article details
+     * @param id , an Integer, the id of the Article wanted
+     * @return the Article
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getArticlesByThemes(@PathVariable("id") Integer id) {
+    public ResponseEntity<ReturnArticleDTO> getArticlesByThemes(@PathVariable("id") Integer id) {
         ReturnArticleDTO articleDTO = articleService.getArticleById(id);
         return ResponseEntity.ok(articleDTO);
     }

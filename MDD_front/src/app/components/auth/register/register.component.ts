@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon'
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RegisterRequest } from '../interfaces/registerRequest.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,7 @@ import { RegisterRequest } from '../interfaces/registerRequest.interface';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
@@ -27,7 +28,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public onError = false;
-
+  public subscription: Subscription | undefined;
   public registerForm!: FormGroup;
 
   ngOnInit(): void {
@@ -58,9 +59,15 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription != undefined) {
+      this.subscription.unsubscribe()
+    }
+  }
+
   public onSubmit(): void {
     const registerRequest = this.registerForm.value as RegisterRequest;
-    this.authService.register(registerRequest).subscribe({
+    this.subscription = this.authService.register(registerRequest).subscribe({
       next: (_: void) => {
         this.router.navigate(['/auth/login'])
       },

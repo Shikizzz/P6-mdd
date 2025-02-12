@@ -18,8 +18,12 @@ public class ThemeController {
         this.themeService = themeService;
     }
 
+    /**
+     * This gets all the Themes in database
+     * @return all the themes in database, as ThemeDTO[]
+     */
     @GetMapping("")
-    public ResponseEntity<?> getAllThemes() {
+    public ResponseEntity<ThemeDTO[]> getAllThemes() {
         ThemeDTO[] themes = themeService.getAllThemes();
         return ResponseEntity.ok(themes);
     }
