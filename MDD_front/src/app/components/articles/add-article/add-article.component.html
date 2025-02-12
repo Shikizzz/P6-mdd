@@ -1,0 +1,33 @@
+<app-header></app-header>
+
+<button class="back" routerLink="/articles">
+    <mat-icon class="arrow">keyboard_backspace</mat-icon>
+</button>
+
+<div class="addArticle_page">
+    
+    <h2 class="title">Créer un nouvel article</h2>
+     
+    <form [formGroup]="form">
+        <div class="form_input">
+            <select class="input" type="text" id="theme" formControlName="theme" required>
+                <option value="" disabled selected hidden>Sélectionner un thème</option>
+                <option *ngFor="let theme of themes" [ngValue]="theme.themeId" placeholder="Sélectionner un thème">
+                    {{theme.title}}
+                </option>
+            </select>
+        </div>
+        <div class="form_input">
+            <input class="input" type="text" id="title" formControlName="title" placeholder="Titre de l'article">
+        </div>
+        <div class="form_input">
+            <textarea class="input" type="text" id="content" formControlName="content" placeholder="Contenu de l'article"></textarea>
+        </div>
+        @if(onError) {<p class="error">An error occurred</p>}
+        <button class="submit" type="submit" (click)="onSubmit()">Créer</button>
+    </form>
+
+</div>
+
+
+

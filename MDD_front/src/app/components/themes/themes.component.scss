@@ -1,0 +1,33 @@
+
+
+.page_container{
+    width: 95%;
+    margin: auto;
+    margin-top: 2em;
+}
+
+.theme{
+    display: inline-block;
+    width: 50%;
+}
+
+.submit{
+    background-color: rgba(119,99,196,255);
+    font-size: 2em;
+    color: white;
+    padding: 0.5em 1.3em;
+    border-radius: 0.5em;
+    font-weight: 500;
+    display: flex;
+    margin: auto;
+    margin-bottom: 0.4em;
+    cursor: pointer;
+}
+
+
+@media (max-width: 1000px) {
+    .theme{
+    width: 100%
+    }
+}
+   

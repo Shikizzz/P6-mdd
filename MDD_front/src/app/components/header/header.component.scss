@@ -1,0 +1,126 @@
+
+.header{
+    border-bottom : solid 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo_div{
+    width: fit-content;
+    height: 15%;
+}
+
+img{
+    padding-left: 2em;
+    height: 8em;
+}
+
+.links{
+    display: flex;
+    padding: 0px;
+}
+
+li{
+    display: inline;
+    margin : auto;
+    text-align: center;
+}
+
+a{
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    font-size: 2.5em;
+    margin: 0em 0.7em;
+}
+
+mat-icon{
+    transform: scale(3);
+    color: gray;
+    cursor: pointer;
+}
+
+.active{
+    color: rgba(119,99,196,255);
+}
+
+.account_button{
+    border: 0px;
+    background-color: white;
+    padding: 3em 3em;
+    margin-right: 4em;
+}
+
+
+.burger_button{
+    display: none;
+}
+
+@media (max-width: 1000px) {
+    .links{
+        display: none;
+    }
+    .burger_button{
+        display: flex;
+        border: 1px;
+        background-color: white;
+        margin-right: 4em;
+        padding: 1.2em;
+    }
+    .burger{
+        transform: scale(2);
+        color: black;
+    }
+}
+
+.phone_menu{
+    z-index: 2;
+    position: fixed;
+    right: 0;
+    top: 0;
+    border: 2px solid;
+    width: 60%;
+    height: 100vh;
+    background-color: white;
+}
+.close_button{
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    border: 0px;
+    background-color: white;
+    margin: 1.5em;
+}
+.close{
+    transform: scale(1.5);
+    color: black;
+}
+.menu_links{
+    display: flex;
+    flex-direction: column;
+    margin-top: 4em;
+
+    li{
+        margin-bottom: 1em;
+    }
+}
+.phone_menu{
+    .account{
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        margin: 2em;
+    }
+}
+
+.opacity{
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: gray;
+    opacity: 0.3;
+}

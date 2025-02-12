@@ -1,4 +1,4 @@
-package com.orion.mdd.model.dto;
+package com.orion.mdd.model.dto.auth;
 
 import jakarta.validation.constraints.NotBlank;
 

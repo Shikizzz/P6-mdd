@@ -1,0 +1,14 @@
+<app-header></app-header>
+
+
+<div class="buttons_container">
+    <button class="addArticle" (click)="onAddArticle()">Créer un article</button>
+</div>
+
+@if(onError) {<p class="error">An error occurred, Unable to fin the articles</p>}
+
+<div class="articles_container">
+    @for (articleElement of articles; track articleElement.articleId) {
+        <app-article-preview class="article" [article]="articleElement" (click)="onClick(articleElement.articleId)"></app-article-preview>
+    }
+</div>

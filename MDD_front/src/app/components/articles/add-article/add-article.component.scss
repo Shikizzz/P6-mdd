@@ -1,0 +1,91 @@
+.back{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: white;
+    border: 0px;
+    margin-top: 11em;
+    cursor: pointer;
+}
+.arrow{
+    margin: 2em 3em;
+    transform: scale(3);
+}
+
+.title{
+    width: fit-content;
+    text-align: center;
+    font-size: 3em;
+    font-weight: 500;
+    margin: auto;
+    margin-bottom: 1.3em;
+    padding-top: 0.8em;
+}
+
+.form_input{
+    text-align: start;
+    width: 30%;
+    margin: auto;
+    font-size: 1.6em;
+    font-weight: 400;
+    margin-bottom: 1.3em;
+}
+
+.input{
+    padding-left: 0.3em;
+    width: 97.5%;
+    height: 2em;
+    font-size: 1.5em;
+    border-radius: 0.3em;
+    border: 2px solid rgba(119,99,196,255);
+}
+#theme{
+    width: 100%;
+    background-color: white;
+}
+
+select:invalid{
+    color: gray;
+}
+
+#content{
+    height: 5em;
+    font-size: 1.8em;
+}
+
+.submit{
+    background-color: rgba(119,99,196,255);
+    font-size: 2em;
+    color: white;
+    padding: 0.5em 1.3em;
+    border-radius: 0.5em;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    margin: auto;
+}
+
+@media (max-width: 1250px) {  
+    .form_input{
+        width:50%;
+    }
+}
+
+@media (max-width: 1000px) {
+    
+    .title{
+        margin-top: 2.3em;
+        margin-bottom: 0.8em;
+        font-size: 2.6em;
+    }
+    .form_input{
+        width:80%;
+    }
+    .input{
+        font-size: 1.2em;
+    }
+    #content{
+        height: 5em;
+        font-size: 1.6em;
+    }
+}

@@ -1,0 +1,40 @@
+
+<nav class="header">
+    <div class="logo_div">
+        <img class="logo" src="assets/icon.svg" alt = "App logo">
+    </div>
+
+    @if (!menuIsClicked) {
+        <ul class="links">
+            <li><a routerLink="/articles" routerLinkActive="active">Articles</a></li>
+            <li><a routerLink="/themes" routerLinkActive="active">Thèmes</a></li>
+            <li>
+                <button class="account_button" routerLink="/profile">
+                    <mat-icon id="account" routerLinkActive="active">account_circle</mat-icon>
+                </button>
+            </li>
+        </ul>
+        <button class="burger_button" (click)="onClickMenu()">
+            <mat-icon class="burger">menu</mat-icon>
+        </button>
+    }
+
+    @if (menuIsClicked) {
+        
+        <div class="opacity"></div>
+
+        <div class="phone_menu">
+            <button class="close_button" (click)="onClickMenu()">
+                <mat-icon class="close">close</mat-icon>
+            </button>
+            <ul class="menu_links">
+                <li><a routerLink="/articles" routerLinkActive="active">Articles</a></li>
+                <li><a routerLink="/themes" routerLinkActive="active">Thèmes</a></li>
+            </ul>
+                <button class="account_button" routerLink="/profile">
+                    <mat-icon class="account" id="profile" routerLinkActive="active">account_circle</mat-icon>
+                </button>
+        </div>
+    }
+
+</nav>

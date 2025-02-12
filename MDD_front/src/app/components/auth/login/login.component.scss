@@ -1,0 +1,102 @@
+.header{
+    border-bottom: solid 2px;
+}
+.logo_div{
+    width:  fit-content;
+    height: 15%;
+}
+
+img{
+    padding-left: 3em;
+    height: 10em;
+}
+
+.login_page{
+    text-align: center;
+}
+
+.back{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: white;
+    border: 0px;
+    margin-top: 13em;
+    cursor: pointer;
+}
+
+.arrow{
+    margin: 2em 3em;
+    transform: scale(3);
+}
+
+.title{
+    width: fit-content;
+    align-self: center;
+    font-size: 3em;
+    font-weight: 400;
+    margin: auto;
+    margin-bottom: 1.5em;
+    padding-top: 2em;
+}
+
+.form_input{
+    text-align: start;
+    width: 30%;
+    margin: auto;
+    font-size: 1.6em;
+    font-weight: 400;
+    margin-bottom: 2em;
+}
+input{
+    width: 100%;
+    height: 2em;
+    font-size: 1.5em;
+    border-radius: 0.3em;
+    border: 2px solid;
+}
+
+.submit{
+    background-color: rgba(119,99,196,255);
+    font-size: 2em;
+    color: white;
+    padding: 0.5em 1.3em;
+    border-radius: 0.5em;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.error{
+    color: red;
+}
+
+@media (max-width: 1200px) {
+    .form_input{
+        width: 50%;
+    }
+}
+
+@media (max-width: 800px) {
+    .header{
+        border: 0px;
+    }
+    .logo_div{
+        margin: auto;
+    }
+    img{
+        display: block;
+        margin: auto;
+        margin-top: 7em;
+    }
+
+    .back{margin-top: 0em;}
+
+    .form_input{
+        width: 80%;
+    }
+
+    .title{
+        margin-bottom: 1em;
+        padding-top: 0em;
+    }
+}

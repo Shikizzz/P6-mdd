@@ -1,0 +1,89 @@
+
+.login_page{
+    text-align: center;
+}
+
+.title{
+    width: fit-content;
+    align-self: center;
+    font-size: 2.5em;
+    font-weight: 500;
+    margin: 1em auto;
+}
+
+.form_input{
+    text-align: start;
+    width: 30%;
+    margin: auto;
+    font-size: 1.6em;
+    font-weight: 400;
+    margin-bottom: 1.5em;
+}
+input{
+    padding-left: 0.3em;
+    width: 100%;
+    height: 2em;
+    font-size: 1.5em;
+    border-radius: 0.3em;
+    border: 2px solid rgba(119,99,196,255);
+}
+
+.submit{
+    background-color: rgba(119,99,196,255);
+    font-size: 2em;
+    color: white;
+    padding: 0.5em 1.3em;
+    border-radius: 0.5em;
+    font-weight: 500;
+    display: flex;
+    margin: auto;
+    margin-bottom: 0.4em;
+    cursor: pointer;
+}
+
+.disconnect{
+    display: flex;
+    width: fit-content;
+    margin: auto;
+    color: rgb(182, 0, 0);
+    font-size: 1.5em;
+    font-weight: 500;
+    background-color: white;
+    border: 0px;
+    cursor: pointer;
+}
+
+.separator{
+    width: 80%;
+    margin: 1.5em auto;
+    border: 1px solid;
+}
+
+.subscribes{
+    width: 95%;
+    margin: auto;
+    margin-top: 2em;
+}
+
+.theme{
+    display: inline-block;
+    width: 50%;
+}
+
+
+@media (max-width: 1000px) {
+
+    .title{
+        margin: 0.8em auto;
+    }
+
+    .form_input{
+        width: 80%;
+        margin-bottom: 1.5em;
+    }
+
+    .theme{
+        width: 100%;
+    } 
+   
+}
