@@ -68,7 +68,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   public sort(): void {
     this.articles.reverse();
-    this.onArrowClicked = !this.onArrowClicked
+    this.onArrowClicked = !this.onArrowClicked;
   }
 
 }
