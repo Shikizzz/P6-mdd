@@ -1,5 +1,6 @@
 package com.orion.mdd.controllers;
 
+import com.orion.mdd.model.dto.auth.ModifyNoPassword;
 import com.orion.mdd.model.dto.auth.ModifyRequest;
 import com.orion.mdd.services.UserService;
 import jakarta.validation.Valid;
@@ -21,9 +22,15 @@ public class UserController {
      * @param modifyRequest an object containing the user's id(Integer), username(String), email(String), password(String)
      * @return Http200 response with String in body
      */
-    @PutMapping(value= "", consumes="application/json")
+    @PutMapping(value= "/password", consumes="application/json")
     public ResponseEntity<?> putUser(@Valid@RequestBody ModifyRequest modifyRequest) {
         userService.putUser(modifyRequest);
+        return ResponseEntity.ok("User Modification Successfull");
+    }
+
+    @PutMapping(value= "/noPassword", consumes="application/json")
+    public ResponseEntity<?> putUserNoPassword(@Valid@RequestBody ModifyNoPassword modifyRequest) {
+        userService.putUserNoPassword(modifyRequest);
         return ResponseEntity.ok("User Modification Successfull");
     }
 

@@ -4,6 +4,7 @@ import { UserInformationDTO } from "../components/auth/interfaces/userInformatio
 import { Observable } from "rxjs";
 import { Message } from "../components/articles/interfaces/message.interface";
 import { ModifyRequest } from "../components/profile/interfaces/modifyRequest.interface";
+import { ModifyNoPassword } from "../components/profile/interfaces/modifyNoPassword.class";
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +16,10 @@ export class UserService {
     constructor(private httpClient: HttpClient) { }
 
     public modifyProfile(putRequest: ModifyRequest): any {
-        return this.httpClient.put(`${this.pathService}`, putRequest, { responseType: 'text' });
+        return this.httpClient.put(`${this.pathService}/password`, putRequest, { responseType: 'text' });
+    }
+    public modifyProfileNoPassword(putRequest: ModifyNoPassword): any {
+        return this.httpClient.put(`${this.pathService}/noPassword`, putRequest, { responseType: 'text' });
     }
 
     public themeSubscribe(themeId: number): any {

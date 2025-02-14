@@ -3,6 +3,7 @@ package com.orion.mdd.services;
 import com.orion.mdd.model.Theme;
 import com.orion.mdd.model.User;
 import com.orion.mdd.model.dto.auth.LoginResponse;
+import com.orion.mdd.model.dto.auth.ModifyNoPassword;
 import com.orion.mdd.model.dto.auth.RegisterRequest;
 import com.orion.mdd.model.dto.ThemeDTO;
 import com.orion.mdd.model.dto.auth.ModifyRequest;
@@ -70,6 +71,12 @@ public class UserService {
         user.setEmail(request.getEmail());
         user.setUsername(request.getUsername());
         user.setPassword(encoder.encode(request.getPassword()));
+        userRepository.save(user);
+    }
+    public void putUserNoPassword(ModifyNoPassword request){
+        User user = userRepository.findById(request.getId()).get(); // ID in DB, because sent from front, that get it from Backend's DB
+        user.setEmail(request.getEmail());
+        user.setUsername(request.getUsername());
         userRepository.save(user);
     }
 

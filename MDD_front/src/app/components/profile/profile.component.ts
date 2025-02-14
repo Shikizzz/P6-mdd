@@ -9,7 +9,8 @@ import { ThemeComponent } from '../themes/theme/theme.component';
 import { ThemeProps } from '../themes/interfaces/themeProps.class';
 import { ModifyRequest } from './interfaces/modifyRequest.interface';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
+import { ModifyNoPassword } from './interfaces/modifyNoPassword.class';
 
 @Component({
   selector: 'app-profile',
@@ -35,8 +36,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public subscription: Subscription | undefined;
   public _sessionInformation = signal<SessionInformation | undefined>(undefined);
   public form!: FormGroup;
+  public isPasswordEmpty: boolean = true;
 
   public _themesProps: Signal<ThemeProps[]> = signal([]);
+
 
   ngOnInit(): void {
     this._sessionInformation = this.sessionService._sessionInformation;
@@ -61,13 +64,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
       ],
       password: [
         '',
-        [
-          Validators.required,
-          Validators.min(8),
-          Validators.max(40)
-        ]
       ]
     });
+
+    this.form.controls['password'].valueChanges.subscribe((passwordValue: String) => {
+      if (passwordValue.length > 0) {
+        this.isPasswordEmpty = false
+      }
+    })
   }
 
   ngOnDestroy(): void {
@@ -79,18 +83,37 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public onSubmit(): void {
     const request = this.form.value as ModifyRequest;
     request.id = this._sessionInformation()!.id;
-    this.subscription = this.userService.modifyProfile(request).subscribe({
-      next: () => {
-        this._sessionInformation()!.email = request.email;
-        this._sessionInformation()!.username = request.username;
-        this.sessionService.logIn(this._sessionInformation()!); //updating profile in frontend session
-        this.matSnackBar.open("Modification successfull !", 'Close', { duration: 3000 });
-      },
-      error: (error: any) => {
-        this.onError = true;
-        console.log(error);
-      },
-    });
+
+    if (!this.isPasswordEmpty) {
+      this.subscription = this.userService.modifyProfile(request).subscribe({
+        next: () => {
+          this._sessionInformation()!.email = request.email;
+          this._sessionInformation()!.username = request.username;
+          this.sessionService.logIn(this._sessionInformation()!); //updating profile in frontend session
+          this.matSnackBar.open("Modification successfull !", 'Close', { duration: 3000 });
+        },
+        error: (error: any) => {
+          this.onError = true;
+          console.log(error);
+        },
+      });
+    }
+
+    else {
+      const requestNoPassWord = new ModifyNoPassword(request.id, request.username, request.email)
+      this.subscription = this.userService.modifyProfileNoPassword(requestNoPassWord).subscribe({
+        next: () => {
+          this._sessionInformation()!.email = request.email;
+          this._sessionInformation()!.username = request.username;
+          this.sessionService.logIn(this._sessionInformation()!); //updating profile in frontend session
+          this.matSnackBar.open("Modification successfull !", 'Close', { duration: 3000 });
+        },
+        error: (error: any) => {
+          this.onError = true;
+          console.log(error);
+        },
+      });
+    }
   }
 
   public onDisconnect(): void {

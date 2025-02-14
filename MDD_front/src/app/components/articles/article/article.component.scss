@@ -40,11 +40,13 @@
 .comment_container{
     width: 100%;
     display: grid;
-    grid-template-columns: 20% 70%;
+    grid-template-columns: min-content auto;
 }
 .author{
     margin-top: 0;
-    padding-left: 1.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    word-wrap: break-word;
 }
 .comment_div{
     background-color: rgb(240, 240, 240);
@@ -124,7 +126,7 @@
     }
 
     .comment_container{
-        grid-template-columns: 30% 70%;
+        grid-template-columns: 38% 62%;
         font-size: 0.9em;
     }
     .author{
