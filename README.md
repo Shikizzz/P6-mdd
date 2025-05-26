@@ -1,5 +1,10 @@
 # Monde de Dev Application
 
+This is an exercice project for Openclassroom's Java and Angular formation.
+It's the minimal viable product of a social network for developpers.
+I implemented this app following a list of fonctionnalities for the back, and wireframes for the UI design.
+
+
 This project uses : 
 Java 21 with Maven, and Spring Boot 3 for the Backend 
 Angular 19 for the Frontend 
